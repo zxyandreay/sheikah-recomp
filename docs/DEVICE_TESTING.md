@@ -46,3 +46,22 @@ Share the crash lines and device/Android version. Check for `ClassNotFoundExcept
 - No game assets, executable, generated game code, license keys, or network functionality
 
 For further development, the official project remains the `android/` Gradle/NDK sources. Prioritize obtaining a real SDK/NDK build and verifying its APK on device before merging significant BOTW runtime code.
+
+## Installation failure observed and alternate candidate (2026-10-24)
+
+The first custom v1+v2 APK (SHA-256 `711225ac93a7020e1d33d38476bf1518cb4b4d63ecdb85ac55050e1895200577`) **was rejected by Android's package installer** with: **"App not installed as package appears to be invalid."** Do not call that APK valid or compatible.
+
+The packaging/signing pipeline in the original experiment was hand-written, so its static checks did not establish Android compatibility. The precise PackageManager failure code has **not** been collected; the cause is not yet verified.
+
+A second **diagnostic test candidate**, `sheikah-recomp-diagnostics-arm64-v1.apk`, was built from the same manifest/DEX/native code using standard Java `jarsigner` only (APK Signature Scheme v1), without the experimental v2 signing block. This is a **hypothesis test** isolating signing; it does not repair potential manifest or DEX errors. Android 8+ supports v1 signatures for an app targeting SDK 28. Its local ZIP, JAR signature, DEX checksums and ARM64 ELF headers pass static checks, **but installation is not verified**.
+
+Second candidate SHA-256: `036b89ed5bda253e82bbd03ae153f0f3eb49614b2b6e97153e722520c5c8d663`.
+
+If the second candidate still fails, avoid further hand-assembled releases. Next collect the actual installer error using:
+
+```powershell
+adb install -r sheikah-recomp-diagnostics-arm64-v1.apk
+```
+
+and prefer rebuilding the canonical `android/` source using Android Gradle Plugin + SDK + NDK + official apksigner/zipalign. Do not lower device security settings.
+
