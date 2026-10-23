@@ -1,0 +1,3 @@
+[submodule "upstream/BotWRecomp"]
+	path = upstream/BotWRecomp
+	url = https://github.com/IshaanKalra2103/BotWRecomp.git
