@@ -24,3 +24,7 @@
 - **Not yet verified on a real Android phone.** It is a native bootstrap diagnostic, not playable BOTW. The normal Gradle/NDK project still requires its own successful build.
 
 Next: user/device installation result; resolve any PackageManager/Dalvik/JNI errors; obtain standard SDK/NDK build for reproducible Gradle APKs; only then integrate upstream runtime components.
+
+## 2026-10-24 — Android rejected initial APK
+
+User's Android package installer reported **"App not installed as package appears to be invalid"** for the initial custom v1+v2-signed APK. This supersedes earlier static APK checks and must be considered a failed install. A second JAR-v1-signed-only **unverified** diagnostic candidate was prepared to isolate signature-scheme issues. Actual PackageManager error code and a standard Android SDK/NDK-built APK are still missing. See docs/DEVICE_TESTING.md. Do not claim an Android device build or working install.
