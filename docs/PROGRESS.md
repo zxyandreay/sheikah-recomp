@@ -14,3 +14,13 @@
 **Next task:** reproduce CMake host tests and assemble the ARM64 debug APK locally, then instrument guest virtual address reservation tests.
 
 **Playable status:** no title screen, no game runtime integration, no Android gameplay.
+
+## 2026-10-24 — First distributable Android ARM64 diagnostic test package
+
+- Produced a separate experimental diagnostic APK without Nintendo game files in the constrained execution environment (no Android SDK/NDK/Gradle or network downloads).
+- Cross-compiled an ARM64-only JNI native shared library using LLVM/LLD; generated minimal Android manifest and DEX as an interim fallback, not the canonical Gradle build.
+- Signed with a self-signed development test certificate (v1+v2 schemes). Local ZIP/DEX/manifest/ELF structural checks and cryptographic self-verification passed.
+- Shared the test APK as a conversation artifact. See docs/DEVICE_TESTING.md for installation instructions and exact SHA-256.
+- **Not yet verified on a real Android phone.** It is a native bootstrap diagnostic, not playable BOTW. The normal Gradle/NDK project still requires its own successful build.
+
+Next: user/device installation result; resolve any PackageManager/Dalvik/JNI errors; obtain standard SDK/NDK build for reproducible Gradle APKs; only then integrate upstream runtime components.
